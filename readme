@@ -1,0 +1,29 @@
+# Traccar Docker + OSM Reverse Geocoding
+
+Ce projet contient une configuration Docker pour **Traccar** (serveur de tracking GPS) et un service de **reverse geocoding** utilisant **OpenStreetMap / Nominatim**.
+
+## Contenu du projet
+
+- `docker-compose.yml` : définit les services Traccar, Nominatim et osm-reverse.
+- `Dockerfile` : Dockerfile pour le service osm-reverse (Flask + geopy).
+- `osm-reverse/` : dossier contenant le code Python pour le service de reverse geocoding.
+
+## Prérequis
+
+- Docker >= 20.x
+- Docker Compose >= 2.x
+- Connexion internet pour télécharger les images et données OSM
+
+## Commandes pour lancer les services
+
+1. Construire les conteneurs et démarrer le projet :
+
+docker compose build
+docker compose up -d
+docker ps
+
+2. Accéder aux services :
+Traccar : http://localhost:8082
+
+3. Exemple de test pour osm-reverse avec curl :
+curl "http://localhost:5000/reverse?lat=36.8065&lon=10.1815"
