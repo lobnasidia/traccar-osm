@@ -1,0 +1,35 @@
+version: "3.9"
+services:
+  traccar:
+    build: .
+    ports:
+      - "8082:8082"
+  
+  nominatim:
+    image: mediagis/nominatim:4.1
+    ports:
+      - "8081:8080"
+    volumes:
+      - nominatim-data:/nominatim/data
+      - nominatim-postgres:/var/lib/postgresql/13/main
+    environment:
+      PBF_URL: "https://download.geofabrik.de/africa/tunisia-latest.osm.pbf"
+      POSTGRES_PASSWORD: "mysecretpassword"
+      POSTGRES_USER: "nominatim"
+      POSTGRES_DB: "nominatim"
+
+  osm-reverse:
+    build: ./osm-reverse
+    ports:
+      - "5000:5000"
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    environment:
+      NOMINATIM_URL: "http://nominatim:8080"
+    depends_on:
+      - nominatim
+
+volumes:
+  nominatim-data:
+  nominatim-postgres:
