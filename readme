@@ -24,6 +24,7 @@ docker ps
 
 2. Accéder aux services :
 Traccar : http://localhost:8082
+Osm-reverse API : http://localhost:5000/reverse
 
 3. Exemple de test pour osm-reverse avec curl :
 curl "http://localhost:5000/reverse?lat=36.8065&lon=10.1815"
